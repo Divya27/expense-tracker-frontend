@@ -23,4 +23,4 @@ Thumbs.db
 .idea/
 
 # Testing
-coverage/
+coverage/node_modules/
