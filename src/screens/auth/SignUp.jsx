@@ -32,7 +32,7 @@ export default function SignUp() {
         email: form.email,
         password: form.password,
       });
-      navigate('/signin', { state: { message: 'Account created! Please sign in.' } });
+      navigate('/signin', { state: { message: 'User created! Please sign in.' } });
     } catch (err) {
       setError(err.response?.data?.message || 'Something went wrong');
     }
