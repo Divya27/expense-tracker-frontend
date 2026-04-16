@@ -24,7 +24,7 @@ export default function SignIn() {
     if (!form.email || !form.password) return setError('Email and password required');
     setLoading(true);
     try {
-      const res = await api.post('/auth/login', form);
+      const res = await api.post(`${process.env.REACT_APP_API_URL}/api/auth/login`, form);
       login(res.data.data.token, res.data.data.user);
       navigate('/log');
     } catch (err) {

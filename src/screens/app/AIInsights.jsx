@@ -43,7 +43,7 @@ export default function AIInsights() {
     async function loadContext() {
       setLoadingContext(true);
       try {
-        const res = await api.get('/expenses', {
+        const res = await api.get(`${process.env.REACT_APP_API_URL}/api/expenses`, {
           params: { from: daysAgo(29), to: TODAY, limit: 100 }
         });
         const raw = Array.isArray(res.data.data?.expenses)

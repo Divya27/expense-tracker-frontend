@@ -25,7 +25,7 @@ export function AuthProvider({ children }) {
   const logout = async () => {
     try {
       // call logout API
-      await api.post('/auth/logout');
+      await api.post(`${process.env.REACT_APP_API_URL}/api/auth/logout`);
     } catch (err) {
       // even if API fails, clear local state
       console.error(err);

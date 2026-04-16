@@ -148,13 +148,13 @@ export default function Dashboard() {
     try {
       // main period
       const { from, to } = getDateRange(period);
-      const res = await api.get('/expenses', { params: { from, to, limit: 100 } });
+      const res = await api.get(`${process.env.REACT_APP_API_URL}/api/expenses`, { params: { from, to, limit: 100 } });
       const main = normalize(res.data.data?.expenses);
       setExpenses(main);
 
       // last 7 days bar chart
       const { from: f7, to: t7 } = getDateRange('week');
-      const res7 = await api.get('/expenses', { params: { from: f7, to: t7, limit: 100 } });
+      const res7 = await api.get(`${process.env.REACT_APP_API_URL}/api/expenses`, { params: { from: f7, to: t7, limit: 100 } });
       const days = getLast7Days();
       normalize(res7.data.data?.expenses).forEach(e => {
         const day = days.find(d => d.date === e.date);
@@ -165,7 +165,7 @@ export default function Dashboard() {
 
       // prev 7 days for comparison
       const { from: fp, to: tp } = getDateRange('prevweek');
-      const resp = await api.get('/expenses', { params: { from: fp, to: tp, limit: 100 } });
+      const resp = await api.get(`${process.env.REACT_APP_API_URL}/api/expenses`, { params: { from: fp, to: tp, limit: 100 } });
       const prevTotal = normalize(resp.data.data?.expenses).reduce((s, e) => s + e.amount, 0);
       setPrevWeekTotal(prevTotal);
     } catch (err) { console.error(err); }

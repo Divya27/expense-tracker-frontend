@@ -26,7 +26,7 @@ export default function SignUp() {
       return setError('Password must be at least 6 characters');
     setLoading(true);
     try {
-      await api.post('/auth/register', {
+      await api.post(`${process.env.REACT_APP_API_URL}/api/auth/register`, {
         first_name: form.first_name,
         last_name: form.last_name,
         email: form.email,

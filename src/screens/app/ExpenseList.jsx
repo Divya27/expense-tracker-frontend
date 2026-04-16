@@ -70,7 +70,7 @@ export default function ExpenseList() {
     try {
       const params = { from: fromDate, to: toDate, page: currentPage, limit: 20 };
       if (filterCat !== 'All') params.category = filterCat;
-      const res = await api.get('/expenses', { params });
+      const res = await api.get(`${process.env.REACT_APP_API_URL}/api/expenses`, { params });
       const raw = Array.isArray(res.data.data?.expenses) ? res.data.data.expenses : [];
       setExpenses(raw.map(e => ({ ...e, amount: parseFloat(e.amount), date: e.date.split('T')[0] })));
       setPagination(res.data.data?.pagination || null);
@@ -90,7 +90,7 @@ export default function ExpenseList() {
 
   async function handleDelete(id) {
     try {
-      await api.delete(`/expenses/${id}`);
+      await api.delete(`${process.env.REACT_APP_API_URL}/api/expenses/${id}`);
       fetchExpenses(true);
     } catch (err) { console.error(err); }
   }
@@ -116,7 +116,7 @@ export default function ExpenseList() {
     setEditError('');
     setEditLoading(true);
     try {
-      await api.put(`/expenses/${editEntry.id}`, { ...editForm, amount: +editForm.amount });
+      await api.put(`${process.env.REACT_APP_API_URL}/api/expenses/${editEntry.id}`, { ...editForm, amount: +editForm.amount });
       setEditSuccess(true);
       setTimeout(() => { setEditEntry(null); setEditSuccess(false); fetchExpenses(true); }, 1200);
     } catch (err) { console.error(err); }

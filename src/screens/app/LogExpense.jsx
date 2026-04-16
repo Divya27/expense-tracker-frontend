@@ -44,7 +44,7 @@ export default function LogExpense() {
     setLoading(true);
     setApiError('');
     try {
-      await api.post('/expenses', { ...form, amount: +form.amount });
+      await api.post(`${process.env.REACT_APP_API_URL}/api/expenses`, { ...form, amount: +form.amount });
       setForm({ description: '', amount: '', category: 'Food', date: TODAY, note: '' });
       setErrors({});
       setSuccess(true);
