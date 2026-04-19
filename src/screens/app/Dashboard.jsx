@@ -180,8 +180,18 @@ export default function Dashboard() {
   const catSorted = Object.entries(breakdown).sort((a, b) => b[1] - a[1]);
 
   const { from, to } = getDateRange(period);
-  const dayCount = Math.max(1, Math.ceil((new Date(to) - new Date(from)) / 86400000) + 1);
+
+  // days in selected period
+  const periodDays = Math.ceil((new Date(to) - new Date(from)) / 86400000) + 1;
+
+  // days since user registered (up to today)
+  const registeredAt = new Date(user?.created_at);
+  const daysSinceRegistration = Math.ceil((new Date() - registeredAt) / 86400000);
+
+  // use whichever is smaller — never divide by more days than user has existed
+  const dayCount = Math.max(1, Math.min(periodDays, daysSinceRegistration));
   const dailyAvg = total / dayCount;
+
   const biggest = expenses.length > 0 ? expenses.reduce((m, e) => e.amount > m.amount ? e : m, expenses[0]) : null;
   const recent = [...expenses].sort((a, b) => new Date(b.date) - new Date(a.date)).slice(0, 5);
 
